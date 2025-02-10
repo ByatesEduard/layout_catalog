@@ -1,3 +1,15 @@
+// 🔹 Загальні змінні
+$color-primary: #060b35;
+$color-hover: #00acdc;
+$color-title-hover: #34568b;
+$padding-horizontal: 40px;
+$padding-vertical: 50px;
+$gap-horizontal: 46px;
+$gap-vertical: 48px;
+$card-width: 200px;
+$animation-time: 300ms;
+
+// 🔹 Глобальні стилі
 * {
   margin: 0;
   padding: 0;
@@ -8,9 +20,10 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+// 🔹 Шапка
 .header {
-  align-items: center;
   display: flex;
+  align-items: center;
   background-color: #f9f9f9;
   padding: 10px 20px;
   border-bottom: 1px solid #ccc;
@@ -20,7 +33,6 @@ body {
 .nav-list {
   display: flex;
   list-style: none;
-  margin-left: auto;
 }
 
 .nav-item {
@@ -29,72 +41,51 @@ body {
 
 .nav-link {
   text-decoration: none;
-  text-transform: uppercase;
-  color: #000;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  height: 80px;
+  color: $color-primary;
   font-weight: bold;
+  text-transform: uppercase;
+  transition: color $animation-time ease;
+
+  &--active {
+    color: $color-hover;
+  }
+
+  &:hover {
+    color: $color-hover;
+  }
 }
 
-.nav-link.is-active {
-  position: relative;
-  color: #00aced;
-}
-
-.nav-link:hover {
-  color: #00aced;
-}
-
-.nav-link.is-active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #00aced;
-}
-
-.logo {
-  width: 100px;
-  height: auto;
-  max-width: 150px;
-}
-
-.cards-container{
+// 🔹 Грід для карток
+.cards-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 48px;
-  padding: 40px 50px;
-}
+  gap: $gap-vertical $gap-horizontal;
+  padding: $padding-vertical $padding-horizontal;
+  grid-template-columns: 1fr;
 
-@media(min-width:488px) {
-  .card__container{
+  @media (min-width: 488px) {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media(min-width:768px) {
-  .card__container{
+  @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
   }
-}
 
-@media(min-width:1024px) {
-  .card__container{
+  @media (min-width: 1024px) {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
+// 🔹 Картки
 .card {
-  width: 200px;
-  height: 406px;
+  width: $card-width;
   padding: 40px 16px 16px;
   border-radius: 5px;
-  box-sizing: border-box;
   border: 1px solid #f3f3f3;
+  transition: transform $animation-time ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 
   &__image {
     width: 160px;
@@ -103,97 +94,31 @@ body {
     margin: 0 auto 40px;
   }
 
-  &__description {
+  &__title {
     font-size: 12px;
     font-weight: 500;
-    line-height: 18px;
-    margin: 40px 0 0;
-    color: #060b35;
-  }
+    color: $color-primary;
+    transition: color $animation-time ease;
 
-  &__code {
-    line-height: 14px;
-    font-size: 10px;
-    font-weight: 400;
-    margin: 4px auto;
-    color: #616070;
-  }
-
-  &__review {
-    margin-top: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-
-    &-text {
-      font-size: 10px;
-      line-height: 14px;
-      color: #060b35;
+    .card:hover & {
+      color: $color-title-hover;
     }
   }
 
-  &__price {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 24px;
+  &__buy-button {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: $color-hover;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    transition:  $animation-time ease, color $animation-time ease;
 
-    &-text {
-      font-size: 12px;
-      color: #616070;
+    &:hover {
+      background-color: #fff;
+      color: $color-hover;
+      border: 1px solid $color-hover;
     }
-
-    &-number {
-      font-size: 16px;
-      font-weight: 700;
-      color: #060b35;
-    }
-  }
-
-  &__buy {
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &-button {
-      width: 100%;
-      height: 40px;
-      border: none;
-      border-radius: 5px;
-      background-color: #00acdc;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #fff;
-        color: #00acdc;
-        border: 1px solid #00acdc;
-      }
-    }
-  }
-}
-
-.stars {
-  display: flex;
-
-  &__star {
-    width: 16px;
-    height: 16px;
-    background-image: url('../images/star.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-
-    & + & {
-      margin-left: 4px;
-    }
-  }
-
-  // Универсальный модификатор для количества звезд
-  &--4 .stars__star:nth-child(-n + 4) {
-    background-image: url('../images/star-active.svg');
   }
 }
